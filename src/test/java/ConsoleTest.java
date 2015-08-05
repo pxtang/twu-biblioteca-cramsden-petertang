@@ -98,7 +98,16 @@ public class ConsoleTest {
     public void shouldSayInvalidOptionIfUserInputInvalidOption() throws Exception {
         console.executeChoice("Thoughtworks, go!");
         verify(output).println("Select a valid option!");
+    }
 
+    @Test
+    public void shouldExecuteQuitWhenEntersQ() throws Exception {
+        String choice = "q";
 
+        QuitCommand quitCommand = mock(QuitCommand.class);
+        menuItems.put("q", quitCommand);
+        console.executeChoice(choice);
+
+        verify(quitCommand).execute();
     }
 }

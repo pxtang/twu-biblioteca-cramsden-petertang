@@ -47,15 +47,4 @@ public class BookTest {
         book = new Book(title,author,year);
         assertThat(book.toString().substring(0,62), is(String.format("%1$-60s |",title)));
     }
-
-    //    @Test
-//    public void shouldPadString() throws Exception {
-//        assertThat(book.padRight(title, 60).length(), is(60));
-//    }
-//
-//    @Test
-//    public void shouldShortenStringWhenLengthIsTooLong() throws Exception {
-//        assertThat(book.lengthAdjust());
-//
-//    }
 }
