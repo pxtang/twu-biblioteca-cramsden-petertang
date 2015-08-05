@@ -35,7 +35,27 @@ public class BookTest {
     }
 
     @Test
-    public void shouldPadString() throws Exception {
-        assertThat(book.padRight(title, 60).length(), is(60));
+    public void shouldShortenTitleWhenTitleExceedsMaxTitleLength() throws Exception {
+        title = "Harry Potter and the Really Really Long Title Just For The Sake of Testing Code Because We Have Nothing Better To Do";
+        book = new Book(title,author,year);
+        assertThat(book.toString().substring(0,62), is(String.format("%s |",title.substring(0,60))));
     }
+
+    @Test
+    public void shouldPadTitleWhenTitleExceedsMaxTitleLength() throws Exception {
+        title = "No";
+        book = new Book(title,author,year);
+        assertThat(book.toString().substring(0,62), is(String.format("%1$-60s |",title)));
+    }
+
+    //    @Test
+//    public void shouldPadString() throws Exception {
+//        assertThat(book.padRight(title, 60).length(), is(60));
+//    }
+//
+//    @Test
+//    public void shouldShortenStringWhenLengthIsTooLong() throws Exception {
+//        assertThat(book.lengthAdjust());
+//
+//    }
 }
