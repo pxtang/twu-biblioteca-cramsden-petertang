@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -16,16 +17,11 @@ import static org.mockito.Mockito.*;
  */
 public class LibraryTest {
     private Library library;
-    private ArrayList<Book> listOfBooks;
+    private List<Book> listOfBooks;
     @Before
     public void setup(){
-        library = new Library();
-
         listOfBooks = new ArrayList<>();
-        listOfBooks.add(new Book("Catch-22","Joseph Heller", 1961));
-        listOfBooks.add(new Book("Harry Potter and the Sorcerer's Stone", "JK Rowling", 1997));
-        listOfBooks.add(new Book("Notes from the Underground", "Fyodor Dostoevsky", 1864));
-        listOfBooks.add(new Book("Head First Java", "Bert Bates and Kathy Sierra", 2003));
+        library = new Library(listOfBooks);
     }
 
     @Test
@@ -35,16 +31,15 @@ public class LibraryTest {
 
     @Test
     public void shouldListNothingWhenLibraryCreatedWithNoBooks(){
-        assertThat(library.listAllBooks(), is(""));
+        assertThat(library.listAllBooks(), is(listOfBooks));
     }
 
     @Test
     public void shouldListAllBooksWhenLibraryCreatedWithBooks() {
-
-        library = new Library(listOfBooks);
-        assertThat(library.listAllBooks(), is("Catch-22 | Joseph Heller | 1961\n" +
-                "Harry Potter and the Sorcerer's Stone | JK Rowling | 1997\n" +
-                "Notes from the Underground | Fyodor Dostoevsky | 1864\n" +
-                "Head First Java | Bert Bates and Kathy Sierra | 2003\n"));
+        List<Book> listOfBooks = new ArrayList<>();
+        listOfBooks.add(mock(Book.class));
+        listOfBooks.add(mock(Book.class));
+        Library library = new Library(listOfBooks);
+        assertThat(library.listAllBooks(),is(listOfBooks));
     }
 }

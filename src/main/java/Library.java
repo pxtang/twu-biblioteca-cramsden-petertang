@@ -16,7 +16,7 @@ public class Library {
         this(new ArrayList<Book>());
     }
 
-    public Library(ArrayList<Book> listOfBooks) {
+    public Library(List<Book> listOfBooks) {
         this.books = listOfBooks;
 
     }
@@ -26,11 +26,7 @@ public class Library {
     }
 
 
-    public String listAllBooks() {
-        String output = "";
-        for (Book book : books) {
-            output += book + "\n";
-        }
-        return output;
+    public List<Book> listAllBooks() {
+        return books;
     }
 }
