@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BibliotecaApp {
@@ -9,8 +12,10 @@ public class BibliotecaApp {
         List<Book> listOfBooks = new ArrayList<>();
         addBooksToList(listOfBooks);
         Library biblioteca = new Library(listOfBooks);
-        Console console = new Console(biblioteca, System.out);
-        
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        HashMap<String, Command> menuItems = new HashMap<>();
+        Console console = new Console(biblioteca, System.out, menuItems, bufferedReader);
+
         console.runLibrary();
     }
 

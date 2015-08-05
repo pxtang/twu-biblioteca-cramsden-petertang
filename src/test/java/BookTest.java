@@ -31,8 +31,11 @@ public class BookTest {
     @Test
     public void shouldGiveBookInfoInColumnsWhenConvertedToString() {
         String bookString = book.toString();
-        assertThat(bookString, is("Harry Potter and the Sorcerer's Stone | JK Rowling | 1997"));
+        assertThat(bookString.length(), is(100));
     }
 
-
+    @Test
+    public void shouldPadString() throws Exception {
+        assertThat(book.padRight(title, 60).length(), is(60));
+    }
 }

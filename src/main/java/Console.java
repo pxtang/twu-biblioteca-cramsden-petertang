@@ -1,6 +1,5 @@
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created by cramsden on 8/5/15.
@@ -8,12 +7,15 @@ import java.util.List;
 public class Console {
     private Library library;
     private PrintStream printStream;
-    private List<String> menuItems = new ArrayList<>();
+    private Map<String, Command> menuItems;
+    private BufferedReader bufferedReader;
 
-    public Console(Library library, PrintStream printStream) {
+    public Console(Library library, PrintStream printStream, Map<String, Command> menuItems, BufferedReader bufferedReader) {
         this.library = library;
         this.printStream = printStream;
-        menuItems.add("List Books");
+        this.menuItems = menuItems;
+        this.bufferedReader = bufferedReader;
+        menuItems.put("1", new ListBooksCommand(this));
     }
 
     public void openLibrary(){
@@ -29,13 +31,36 @@ public class Console {
 
     public void runLibrary() {
         openLibrary();
-        listAllBooks();
+        generateMenu();
+        String choice = getChoice();
+        executeChoice(choice);
     }
 
 
     public void generateMenu() {
-        for (String item : menuItems) {
-            printStream.println(item);
+        Set<Map.Entry<String, Command>> items = menuItems.entrySet();
+        for (Map.Entry<String, Command> item : items) {
+            printStream.printf("%s: %s\n",item.getKey(),item.getValue().description());
+        }
+    }
+
+    public String getChoice() {
+        printStream.print("What choice would you like? ");
+        String choice = null;
+        try {
+            choice = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return choice;
+    }
+
+    public void executeChoice(String choice) {
+        if (menuItems.containsKey(choice)) {
+            menuItems.get(choice).execute();
+        }
+        else {
+            printStream.println("Select a valid option!");
         }
     }
 }
