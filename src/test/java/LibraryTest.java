@@ -18,10 +18,13 @@ import static org.mockito.Mockito.*;
 public class LibraryTest {
     private Library library;
     private List<Book> listOfBooks;
+    private PrintStream printStream;
+
     @Before
     public void setup(){
         listOfBooks = new ArrayList<>();
-        library = new Library(listOfBooks);
+        printStream = mock(PrintStream.class);
+        library = new Library(listOfBooks, printStream);
     }
 
     @Test
@@ -31,15 +34,20 @@ public class LibraryTest {
 
     @Test
     public void shouldListNothingWhenLibraryCreatedWithNoBooks(){
-        assertThat(library.listAllBooks(), is(listOfBooks));
+        verify(printStream, never()).println();
     }
 
     @Test
     public void shouldListAllBooksWhenLibraryCreatedWithBooks() {
         List<Book> listOfBooks = new ArrayList<>();
-        listOfBooks.add(mock(Book.class));
-        listOfBooks.add(mock(Book.class));
-        Library library = new Library(listOfBooks);
-        assertThat(library.listAllBooks(),is(listOfBooks));
+        Book book1 = mock(Book.class);
+        when(book1.toString()).thenReturn("Book");
+        listOfBooks.add(book1);
+        Book book2 = mock(Book.class);
+        when(book2.toString()).thenReturn("Book");
+        listOfBooks.add(book2);
+        Library library = new Library(listOfBooks, printStream);
+        library.listAllBooks();
+        verify(printStream, times(2)).println(anyString());
     }
 }

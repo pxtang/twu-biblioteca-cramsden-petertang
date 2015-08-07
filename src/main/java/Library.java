@@ -1,5 +1,6 @@
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /*
@@ -10,23 +11,25 @@ import java.util.List;
  */
 public class Library {
 
-    private List<Book> books;
+    private Collection<Book> books;
+    private PrintStream printStream;
 
-    public Library() {
-        this(new ArrayList<Book>());
+    public Library(PrintStream printStream) {
+        this(new ArrayList<Book>(), printStream);
     }
 
-    public Library(List<Book> listOfBooks) {
+    public Library(List<Book> listOfBooks, PrintStream printStream) {
         this.books = listOfBooks;
-
+        this.printStream = printStream;
     }
 
     public String open() {
         return "Welcome to the Library! Biblioteca is available!";
     }
 
-
-    public List<Book> listAllBooks() {
-        return books;
+    public void listAllBooks() {
+        for (Book book : books) {
+            printStream.println(book.toString());
+        }
     }
 }

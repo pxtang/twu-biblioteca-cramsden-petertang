@@ -6,16 +6,20 @@ import java.util.*;
  */
 public class Console {
     private Library library;
+    private Menu menu;
     private PrintStream printStream;
     private Map<String, Command> menuItems;
     private BufferedReader bufferedReader;
+    private boolean isNotTerminated;
 
     public Console(Library library, PrintStream printStream, Map<String, Command> menuItems, BufferedReader bufferedReader) {
         this.library = library;
         this.printStream = printStream;
         this.menuItems = menuItems;
         this.bufferedReader = bufferedReader;
-        menuItems.put("1", new ListBooksCommand(this));
+        isNotTerminated = true;
+        menuItems.put("1", new ListBooksCommand(library));
+        menuItems.put("q", new QuitCommand(this));
     }
 
     public void openLibrary(){
@@ -23,26 +27,21 @@ public class Console {
     }
 
 
-    public void listAllBooks() {
-        for (Book book : library.listAllBooks()) {
-            printStream.println(book);
-        }
+    public void close() {
+        isNotTerminated = false;
     }
 
     public void runLibrary() {
         openLibrary();
-        generateMenu();
-        String choice = getChoice();
-        executeChoice(choice);
-    }
-
-
-    public void generateMenu() {
-        Set<Map.Entry<String, Command>> items = menuItems.entrySet();
-        for (Map.Entry<String, Command> item : items) {
-            printStream.printf("%s: %s\n",item.getKey(),item.getValue().description());
+        while (isNotTerminated) {
+            menu.generateMenu();
+            String choice = getChoice();
+            menu.executeChoice(choice);
         }
     }
+
+
+
 
     public String getChoice() {
         printStream.print("What choice would you like? ");
@@ -55,12 +54,5 @@ public class Console {
         return choice;
     }
 
-    public void executeChoice(String choice) {
-        if (menuItems.containsKey(choice)) {
-            menuItems.get(choice).execute();
-        }
-        else {
-            printStream.println("Select a valid option!");
-        }
-    }
+
 }

@@ -47,4 +47,10 @@ public class BookTest {
         book = new Book(title,author,year);
         assertThat(book.toString().substring(0,62), is(String.format("%1$-60s |",title)));
     }
+
+    @Test
+    public void shouldBeCheckedOutAfterCheckingOut() throws Exception {
+//        assertThat();
+
+    }
 }

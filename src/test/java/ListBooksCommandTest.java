@@ -11,20 +11,20 @@ import static org.mockito.Mockito.verify;
  */
 public class ListBooksCommandTest {
 
-    private Console libraryConsole;
+    private Library library;
     private ListBooksCommand listBooksCommand;
 
     @Before
     public void setUp() throws Exception {
-        libraryConsole = mock(Console.class);
-        listBooksCommand = new ListBooksCommand(libraryConsole);
+        library = mock(Library.class);
+        listBooksCommand = new ListBooksCommand(library);
     }
 
     @Test
     public void shouldCallListBooksWhenCommandExecutes() throws Exception {
         listBooksCommand.execute();
 
-        verify(libraryConsole).listAllBooks();
+        verify(library).listAllBooks();
     }
 
     @Test

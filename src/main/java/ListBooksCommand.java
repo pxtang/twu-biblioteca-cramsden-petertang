@@ -2,15 +2,15 @@
  * Created by pdale on 8/5/15.
  */
 public class ListBooksCommand implements Command {
-    private Console libraryConsole;
+    private Library library;
 
-    public ListBooksCommand(Console libraryConsole) {
+    public ListBooksCommand(Library library) {
 
-        this.libraryConsole = libraryConsole;
+        this.library = library;
     }
 
     public void execute() {
-       libraryConsole.listAllBooks();
+       library.listAllBooks();
     }
 
     @Override
